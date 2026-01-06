@@ -1,11 +1,13 @@
 package edu.touro.mcon264.sorting;
 
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class MergeSort implements Sorter {
 
-    @Override
 
+
+    @Override
     public <T> void sort(T[] a, Comparator<? super T> comp) {
         if (a.length < 2) {
             return;
@@ -13,24 +15,12 @@ public class MergeSort implements Sorter {
 
         int mid = a.length / 2;
 
-        // Split array
-        @SuppressWarnings("unchecked")
-        T[] left = (T[]) new Object[mid];
-        @SuppressWarnings("unchecked")
-        T[] right = (T[]) new Object[a.length - mid];
+        T[] left = Arrays.copyOfRange(a, 0, mid);
+        T[] right = Arrays.copyOfRange(a, mid, a.length);
 
-        for (int i = 0; i < mid; i++) {
-            left[i] = a[i];
-        }
-        for (int i = mid; i < a.length; i++) {
-            right[i - mid] = a[i];
-        }
-
-        // Recursively sort halves
         sort(left, comp);
         sort(right, comp);
 
-        // Merge halves
         merge(a, left, right, comp);
     }
 
